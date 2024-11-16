@@ -4,21 +4,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Menu</title>
+    <title>Fancy Menu</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f8f9fa;
+            background: linear-gradient(135deg, #f39c12, #8e44ad);
+            color: #fff;
+        }
+
+        .menu-header {
+            text-align: center;
+            padding: 40px 20px;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 15px;
+            margin: 20px auto;
+            max-width: 900px;
+        }
+
+        .menu-header h1 {
+            font-size: 3rem;
+            font-weight: bold;
+        }
+
+        .menu-container {
+            margin: 40px auto;
         }
 
         .menu-item {
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
-            background: #fff;
+            background: rgba(255, 255, 255, 0.9);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+            border-radius: 15px;
             overflow: hidden;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
         }
 
         .menu-item img {
@@ -29,19 +48,34 @@
 
         .menu-details {
             padding: 15px;
+            color: #333;
         }
 
         .menu-price {
-            color: #28a745;
+            color: #27ae60;
             font-weight: bold;
+        }
+
+        .btn-order {
+            background-color: #8e44ad;
+            color: #fff;
+            border: none;
+        }
+
+        .btn-order:hover {
+            background-color: #732d91;
+            color: #fff;
         }
     </style>
 </head>
 
 <body>
-    <div class="container my-5">
-        <h1 class="text-center mb-4">Our Menu</h1>
-        <div class="row">
+    <div class="container text-center">
+        <div class="menu-header">
+            <h1>Welcome to Our Fancy Menu</h1>
+            <p>Discover the most delicious dishes crafted with love and perfection.</p>
+        </div>
+        <div class="row menu-container">
             <!-- Loop through dummy menu items -->
             @foreach (range(1, 6) as $item)
                 <div class="col-12 col-md-4">
@@ -51,7 +85,7 @@
                             <h5>Menu Item {{ $item }}</h5>
                             <p>Category: Category {{ rand(1, 3) }}</p>
                             <p class="menu-price">Rp {{ number_format(rand(10, 100) * 1000, 0, ',', '.') }}</p>
-                            <button class="btn btn-primary w-100">Order Now</button>
+                            <button class="btn btn-order w-100">Order Now</button>
                         </div>
                     </div>
                 </div>
