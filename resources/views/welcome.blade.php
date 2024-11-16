@@ -72,20 +72,26 @@
 <body>
     <div class="container text-center">
         <div class="menu-header">
-            <h1>Welcome to Our Fancy Menu</h1>
+            <h1>Welcome to Our Restaurant</h1>
             <p>Discover the most delicious dishes crafted with love and perfection.</p>
         </div>
         <div class="row menu-container">
             <!-- Loop through dummy menu items -->
-            @foreach (range(1, 6) as $item)
+            @foreach ($menu_item as $item)
+                @php
+                    $image = $item->images;
+                    $image = json_decode($image);
+                    $image = $image[0];
+                    $image = Storage::url($image);
+                @endphp
                 <div class="col-12 col-md-4">
                     <div class="menu-item">
-                        <img src="https://via.placeholder.com/350x200" alt="Menu Item {{ $item }}">
+                        <img src="{{ url($image) }}" alt="Menu Item {{ $item->name }}">
                         <div class="menu-details">
-                            <h5>Menu Item {{ $item }}</h5>
-                            <p>Category: Category {{ rand(1, 3) }}</p>
-                            <p class="menu-price">Rp {{ number_format(rand(10, 100) * 1000, 0, ',', '.') }}</p>
-                            <button class="btn btn-order w-100">Order Now</button>
+                            <h5>Menu Item {{ $item->name }}</h5>
+                            <p>Category: Category {{ $item->category_id }}</p>
+                            <p class="menu-price">Rp {{ number_format($item->price, 0, ',', '.') }}</p>
+                            <button class="btn btn-order w-100">Tambahkan</button>
                         </div>
                     </div>
                 </div>
