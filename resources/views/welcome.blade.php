@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fancy Menu</title>
+    <title>Order Menu</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
@@ -89,7 +89,7 @@
                         <img src="{{ url($image) }}" alt="Menu Item {{ $item->name }}">
                         <div class="menu-details">
                             <h5>Menu Item {{ $item->name }}</h5>
-                            <p>Category: Category {{ $item->category_id }}</p>
+                            {!! $item->description !!}
                             <p class="menu-price">Rp {{ number_format($item->price, 0, ',', '.') }}</p>
                             <button class="btn btn-order w-100">Tambahkan</button>
                         </div>
