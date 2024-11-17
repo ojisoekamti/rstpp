@@ -53,7 +53,7 @@
         }
 
         .menu-item img {
-            width: 1080px%;
+            width: 350px;
             height: auto;
             object-fit: cover;
         }
