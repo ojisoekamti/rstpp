@@ -120,6 +120,19 @@
                 flex-wrap: nowrap;
                 /* Prevent stacking */
             }
+
+            .menu-image img {
+                width: 70px;
+                height: 70px;
+            }
+
+            .menu-item {
+                padding: 10px;
+            }
+
+            .menu-details h4 {
+                font-size: 1rem;
+            }
         }
     </style>
 
