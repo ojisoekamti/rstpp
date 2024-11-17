@@ -122,8 +122,8 @@
             }
 
             .menu-image img {
-                width: 70px;
-                height: 70px;
+                width: 100px;
+                height: 100%;
             }
 
             .menu-item {
