@@ -122,7 +122,7 @@
             }
 
             .menu-image img {
-                width: 500px;
+                width: 185px;
                 height: auto;
             }
 
