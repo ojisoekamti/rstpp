@@ -20,11 +20,11 @@ use App\Http\Controllers\ReceiptController;
 |
 */
 
-Route::get('/', function () {    
-    
-    $menu_item = DB::table('product_items')->get();
+Route::get('/', function () {
 
-    return view('welcome', ['menu_item' => $menu_item]);
+    $menu_item = DB::table('product_items')->get();
+    $categories = DB::table('categories')->get();
+    return view('welcome', ['menu_items' => $menu_item, 'menu_item' => $menu_item, 'categories' => $categories]);
 });
 
 Route::get('/print-order/{orderId}', [OrderController::class, 'printOrder']);
@@ -33,18 +33,20 @@ Route::get('/receipt', [ReceiptController::class, 'generateReceipt']);
 Route::get('/confirmation', [OrderController::class, 'confirmationOrder']);
 Route::post('/order/confirm', [OrderController::class, 'confirmOrder']);
 
-Route::get('/print-html', function(){
-    $items = DB::table('order_items')->where("order_id", 17)->join('product_items','product_items.id','=','order_items.product_item_id')->get();
+Route::get('/print-html', function () {
+    $items = DB::table('order_items')->where("order_id", 17)->join('product_items', 'product_items.id', '=', 'order_items.product_item_id')->get();
 
     return view('print-order', ['items' => $items]);
 });
-Route::get('/orders/{id}',function(){
+Route::get('/orders/{id}', function () {
     $tables = DB::table('tables')->get();
 
-    return view('confirmation-form', ['tables' => $tables,
-    'order_id' => '#11',
-    'order_date' => '16/11/2024 19:00:11',
-    'table_number' => 'Rooms #101']);
+    return view('confirmation-form', [
+        'tables' => $tables,
+        'order_id' => '#11',
+        'order_date' => '16/11/2024 19:00:11',
+        'table_number' => 'Rooms #101'
+    ]);
 });
 
 
