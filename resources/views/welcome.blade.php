@@ -71,7 +71,7 @@
         .menu-price {
             color: #795548;
             font-weight: bold;
-            /* margin-bottom: 10px; */
+            margin-bottom: 10px;
         }
 
         .btn-order {
@@ -113,50 +113,6 @@
         .nav-tabs .nav-link.active {
             background-color: #795548;
             color: white;
-        }
-
-        /* Flip card container */
-        .flip-card {
-            perspective: 1000px;
-            margin-bottom: 1rem;
-        }
-
-        .flip-card-inner {
-            position: relative;
-            width: 100%;
-            height: 100px;
-            /* Adjust as needed */
-            transform-style: preserve-3d;
-            transition: transform 0.6s ease;
-        }
-
-        .flip-card:hover .flip-card-inner {
-            transform: rotateY(180deg);
-        }
-
-        .flip-card-front,
-        .flip-card-back {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            backface-visibility: hidden;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            border: 1px solid #ddd;
-            border-radius: 10px;
-            overflow: hidden;
-        }
-
-        .flip-card-front {
-            background-color: #ffffff;
-        }
-
-        .flip-card-back {
-            background-color: #f8f9fa;
-            transform: rotateY(180deg);
-            padding: 10px;
-            text-align: center;
         }
 
         @media (max-width: 576px) {
@@ -215,30 +171,19 @@
                                         ? Storage::url($images[0])
                                         : 'https://via.placeholder.com/750';
                                 @endphp
-                                <div class="menu-item flip-card">
-                                    <div class="flip-card-inner">
-                                        <!-- Front side -->
-                                        <div class="flip-card-front d-flex align-items-center">
-                                            <div class="menu-image me-2 flex-shrink-0">
-                                                <img src="{{ url($imageUrl) }}" alt="{{ $item->name }}"
-                                                    class="img-fluid rounded"
-                                                    onerror="this.src='https://via.placeholder.com/150';">
-                                            </div>
-                                            <div class="menu-details flex-grow-1">
-                                                <h4 class="mb-1">{{ $item->name }}</h4>
-                                                <p class="menu-price">Rp {{ number_format($item->price, 0, ',', '.') }}
-                                                </p>
-                                            </div>
-                                        </div>
-
-                                        <!-- Back side -->
-                                        <div class="flip-card-back">
-                                            <p class="text-muted small">{!! $item->description !!}</p>
-                                            <button class="btn btn-sm btn-order w-100"
-                                                onclick="toggleOrder(this, '{{ $item->id }}', '{{ addslashes($item->name) }}', {{ $item->price }})">
-                                                Tambahkan
-                                            </button>
-                                        </div>
+                                <div class="menu-item d-flex align-items-center mb-2">
+                                    <div class="menu-image me-2 flex-shrink-0">
+                                        <img src="{{ url($imageUrl) }}" alt="{{ $item->name }}"
+                                            class="img-fluid rounded"
+                                            onerror="this.src='https://via.placeholder.com/150';">
+                                    </div>
+                                    <div class="menu-details flex-grow-1">
+                                        <h4 class="mb-1">{{ $item->name }}</h4>
+                                        <p class="text-muted small mb-1">{!! $item->description !!}</p>
+                                        <p class="menu-price mb-2">Rp {{ number_format($item->price, 0, ',', '.') }}
+                                        </p>
+                                        <button class="btn btn-sm btn-order w-100"
+                                            onclick="toggleOrder(this, '{{ $item->id }}', '{{ addslashes($item->name) }}', {{ $item->price }})">Tambahkan</button>
                                     </div>
                                 </div>
                             @endforeach
