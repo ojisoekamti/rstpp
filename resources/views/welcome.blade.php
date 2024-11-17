@@ -53,7 +53,7 @@
         }
 
         .menu-item img {
-            width: 100%;
+            width: 1080px%;
             height: auto;
             object-fit: cover;
         }
@@ -122,8 +122,8 @@
             }
 
             .menu-image img {
-                width: 100px;
-                height: 100%;
+                width: 500px;
+                height: auto;
             }
 
             .menu-item {
