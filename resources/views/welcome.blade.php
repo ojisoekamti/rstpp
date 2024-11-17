@@ -124,6 +124,7 @@
             .menu-image img {
                 width: 185px;
                 height: auto;
+                object-fit: cover;
             }
 
             .menu-item {
@@ -133,13 +134,17 @@
             .menu-details h4 {
                 font-size: 1rem;
             }
+
+            .menu-details {
+                font-size: 0.5rem;
+            }
         }
     </style>
 
 </head>
 
 <body>
-    <div class="container text-center">
+    <div class="container ">
         <div class="menu-header">
             <h1>Welcome to Our Restaurant</h1>
             <p>Explore our delicious menu and treat yourself to something special.</p>
@@ -160,7 +165,7 @@
                     @endforeach
                 </ul>
 
-                <div class="tab-content mt-3" id="categoryTabsContent">
+                <div class="tab-content mt-3 justify-content-center" id="categoryTabsContent">
                     @foreach ($categories as $index => $category)
                         <div class="tab-pane fade {{ $index === 0 ? 'show active' : '' }}"
                             id="category-{{ $category->id }}" role="tabpanel" aria-labelledby="tab-{{ $category->id }}">
@@ -171,19 +176,29 @@
                                         ? Storage::url($images[0])
                                         : 'https://via.placeholder.com/750';
                                 @endphp
-                                <div class="menu-item d-flex align-items-center mb-2">
+                                <div class="menu-item d-flex mb-2">
                                     <div class="menu-image me-2 flex-shrink-0">
                                         <img src="{{ url($imageUrl) }}" alt="{{ $item->name }}"
                                             class="img-fluid rounded"
                                             onerror="this.src='https://via.placeholder.com/150';">
                                     </div>
-                                    <div class="menu-details flex-grow-1">
-                                        <h4 class="mb-1">{{ $item->name }}</h4>
-                                        <p class="text-muted small mb-1">{!! $item->description !!}</p>
+                                    <div class="menu-details flex-grow-1 justify-content-center">
+                                        <h4 class="mb-1 " style="">{{ $item->name }}</h4>
+                                        <p class="text-muted small mb-1" style="text-align: justify">
+                                            {!! $item->description !!}</p>
                                         <p class="menu-price mb-2">Rp {{ number_format($item->price, 0, ',', '.') }}
                                         </p>
                                         <button class="btn btn-sm btn-order w-100"
                                             onclick="toggleOrder(this, '{{ $item->id }}', '{{ addslashes($item->name) }}', {{ $item->price }})">Tambahkan</button>
+                                        <div
+                                            class="order-controls d-none mt-2 d-flex justify-content-center align-items-center">
+                                            <button class="btn btn-secondary btn-sm"
+                                                onclick="changeOrder(this, -1, '{{ $item->id }}')">-</button>
+                                            <span class="order-quantity mx-2">0</span>
+                                            <button class="btn btn-secondary btn-sm"
+                                                onclick="changeOrder(this, 1, '{{ $item->id }}')">+</button>
+                                        </div>
+
                                     </div>
                                 </div>
                             @endforeach
@@ -192,35 +207,6 @@
                 </div>
             </div>
 
-            {{-- @foreach ($menu_item as $item)
-                @php
-                    $images = $item->images ? json_decode($item->images) : [];
-                    $imageUrl = isset($images[0]) ? Storage::url($images[0]) : 'https://via.placeholder.com/150';
-                @endphp
-                <div class="col-12">
-                    <div class="menu-item d-flex align-items-center">
-                        <div class="menu-image me-3">
-                            <img src="{{ url($imageUrl) }}" alt="Menu Item {{ $item->name }}"
-                                class="img-fluid rounded">
-                        </div>
-                        <div class="menu-details flex-grow-1">
-                            <h4>{{ $item->name }}</h4>
-                            <p class="text-muted">{!! $item->description !!}</p>
-                            <p class="menu-price">Rp {{ number_format($item->price, 0, ',', '.') }}</p>
-                            <button class="btn btn-order w-100"
-                                onclick="toggleOrder(this, '{{ $item->id }}', '{{ addslashes($item->name) }}', {{ $item->price }})">Tambahkan</button>
-                            <div class="order-controls d-none mt-2 d-flex justify-content-center align-items-center">
-                                <button class="btn btn-secondary btn-sm"
-                                    onclick="changeOrder(this, -1, '{{ $item->id }}')">-</button>
-                                <span class="order-quantity mx-2">0</span>
-                                <button class="btn btn-secondary btn-sm"
-                                    onclick="changeOrder(this, 1, '{{ $item->id }}')">+</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            @endforeach
-        </div> --}}
         </div>
 
         <footer class="fixed-bottom bg-dark text-white d-flex justify-content-between align-items-center px-3 py-2">
