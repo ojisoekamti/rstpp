@@ -116,35 +116,10 @@
         }
 
         @media (max-width: 576px) {
-            .menu-header h1 {
-                font-size: 2rem;
-            }
-
-            .menu-header p {
-                font-size: 1rem;
-            }
-
-            .menu-details h4 {
-                font-size: 1rem;
-            }
-
-            .menu-price {
-                font-size: 1rem;
-            }
-
-            .total-price {
-                font-size: 1rem;
-            }
-
-            .menu-image img {
-                width: 70px;
-                height: 70px;
-            }
-
             .menu-item {
-                padding: 10px;
+                flex-wrap: nowrap;
+                /* Prevent stacking */
             }
-
         }
     </style>
 
@@ -184,12 +159,12 @@
                                         : 'https://via.placeholder.com/750';
                                 @endphp
                                 <div class="menu-item d-flex align-items-center mb-2">
-                                    <div class="menu-image me-2">
+                                    <div class="menu-image me-2 flex-shrink-0">
                                         <img src="{{ url($imageUrl) }}" alt="{{ $item->name }}"
                                             class="img-fluid rounded"
-                                            onerror="this.src='https://via.placeholder.com/750';">
+                                            onerror="this.src='https://via.placeholder.com/150';">
                                     </div>
-                                    <div class="menu-details">
+                                    <div class="menu-details flex-grow-1">
                                         <h4 class="mb-1">{{ $item->name }}</h4>
                                         <p class="text-muted small mb-1">{!! $item->description !!}</p>
                                         <p class="menu-price mb-2">Rp {{ number_format($item->price, 0, ',', '.') }}
