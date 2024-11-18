@@ -117,26 +117,24 @@
 
         @media (max-width: 576px) {
             .menu-item {
-                flex-wrap: nowrap;
-                /* Prevent stacking */
+                flex-direction: column;
+                /* Stack elements vertically */
             }
 
             .menu-image img {
-                width: 185px;
+                width: 100%;
+                /* Full width for small screens */
                 height: auto;
+                /* Fixed height for small screens */
                 object-fit: cover;
-            }
-
-            .menu-item {
-                padding: 10px;
-            }
-
-            .menu-details h4 {
-                font-size: 1rem;
+                /* Maintain aspect ratio and crop */
             }
 
             .menu-details {
-                font-size: 0.5rem;
+                text-align: center;
+                /* Center-align text for mobile view */
+                padding-top: 10px;
+                /* Add some spacing from the image */
             }
         }
     </style>
@@ -177,7 +175,7 @@
                                         : 'https://via.placeholder.com/750';
                                 @endphp
                                 <div class="menu-item d-flex mb-2">
-                                    <div class="menu-image me-2 flex-shrink-0">
+                                    <div class="menu-image flex-shrink-0">
                                         <img src="{{ url($imageUrl) }}" alt="{{ $item->name }}"
                                             class="img-fluid rounded"
                                             onerror="this.src='https://via.placeholder.com/150';">
@@ -188,8 +186,8 @@
                                             {!! $item->description !!}</p>
                                         <p class="menu-price mb-2">Rp {{ number_format($item->price, 0, ',', '.') }}
                                         </p>
-                                        <button class="btn btn-sm btn-order w-100"
-                                            onclick="toggleOrder(this, '{{ $item->id }}', '{{ addslashes($item->name) }}', {{ $item->price }})">Tambahkan</button>
+                                        <button
+                                            class="btn btn-sm btn-order w-100"onclick="toggleOrder(this, '{{ $item->id }}', '{{ addslashes($item->name) }}', {{ $item->price }})">Tambahkan</button>
                                         <div
                                             class="order-controls d-none mt-2 d-flex justify-content-center align-items-center">
                                             <button class="btn btn-secondary btn-sm"
