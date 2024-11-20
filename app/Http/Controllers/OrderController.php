@@ -66,10 +66,10 @@ class OrderController extends Controller
     {
         //
     }
-    
+
     public function printOrder($orderId)
     {
-      
+
         // Dummy order data (manually created for testing purposes)
         $order = (object) [
             'id' => 1,
@@ -99,15 +99,16 @@ class OrderController extends Controller
             ],
             'total' => 27.47, // Total price for all items
         ];
-        
+
         // Return the view with the dummy order data
         return view('order-print', compact('order'));
     }
-    
-    public function confirmationOrder(){
+
+    public function confirmationOrder()
+    {
         return view('order-confirmation');
     }
-    
+
     public function confirmOrder(Request $request)
     {
         // Validate incoming request
@@ -125,6 +126,7 @@ class OrderController extends Controller
                 'total_amount' => $request->totalAmount,
                 'customer_name' => $request->name,
                 'table_id' => $request->tableId,
+                'phone' => $request->phone,
             ]);
 
             // Loop through order items and save them to the database
@@ -134,6 +136,7 @@ class OrderController extends Controller
                     'product_item_id' => $item['itemId'],
                     'quantity' => $item['quantity'],
                     'price' => $item['price'],
+                    'notes' => $item['notes'],
                 ]);
             }
 
@@ -156,6 +159,4 @@ class OrderController extends Controller
             ], 500);
         }
     }
-
-
 }

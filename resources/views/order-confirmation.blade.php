@@ -191,12 +191,16 @@
                     const itemTotal = item.quantity * item.price;
                     totalAmount += itemTotal;
 
+                    const notesTextArea = document.getElementById(`notes-${itemId}`);
+                    const notes = notesTextArea ? notesTextArea.value.trim() : ""; // Get value or empty string
+
                     orderDetails.push({
                         itemId: itemId, // Assuming each item has an `itemId` or unique identifier
                         name: item.name,
                         quantity: item.quantity,
                         price: item.price,
-                        total: itemTotal
+                        total: itemTotal,
+                        notes: notes // Include the notes in the order details
                     });
                 }
 
