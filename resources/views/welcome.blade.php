@@ -9,7 +9,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
-            font-family: Calibri, Arial, sans-serif;
+            font-family: Candara, Arial, sans-serif;
             /* Apply Calibri with fallback fonts */
             background-color: #f5f5f5;
             color: #4e342e;

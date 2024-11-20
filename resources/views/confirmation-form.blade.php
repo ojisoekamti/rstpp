@@ -15,7 +15,7 @@
         body {
             background-color: #f4e1d2;
             /* Light brown background */
-            font-family: Calibri, Arial, sans-serif;
+            font-family: Candara, Arial, sans-serif;
             /* Apply Calibri with fallback fonts */
             padding: 50px 0;
         }

@@ -13,7 +13,7 @@
         body {
             background-color: #f8f5f1;
             /* Light beige background */
-            font-family: Calibri, Arial, sans-serif;
+            font-family: Candara, Arial, sans-serif;
             /* Apply Calibri with fallback fonts */
             font-size: 0.9rem;
             /* Smaller font */
