@@ -13,8 +13,10 @@
 
     <style>
         body {
-            background-color: #f4e1d2; /* Light brown background */
-            font-family: 'Poppins', sans-serif; /* Fancy font */
+            background-color: #f4e1d2;
+            /* Light brown background */
+            font-family: Calibri, Arial, sans-serif;
+            /* Apply Calibri with fallback fonts */
             padding: 50px 0;
         }
 
@@ -32,29 +34,36 @@
 
         .card h2 {
             font-weight: 600;
-            color: #5d4037; /* Dark brown color for headings */
+            color: #5d4037;
+            /* Dark brown color for headings */
         }
 
         .form-label {
             font-weight: 500;
-            color: #5d4037; /* Dark brown color for labels */
+            color: #5d4037;
+            /* Dark brown color for labels */
         }
 
         .form-control {
             border-radius: 10px;
-            border: 1px solid #a1887f; /* Light brown border */
+            border: 1px solid #a1887f;
+            /* Light brown border */
             padding: 10px;
-            background-color: #fff8e1; /* Light brown input background */
+            background-color: #fff8e1;
+            /* Light brown input background */
             color: #5d4037;
         }
 
         .form-control:focus {
-            border-color: #8d6e63; /* Slightly darker brown focus border */
-            box-shadow: 0 0 5px rgba(141, 110, 99, 0.5); /* Focus effect */
+            border-color: #8d6e63;
+            /* Slightly darker brown focus border */
+            box-shadow: 0 0 5px rgba(141, 110, 99, 0.5);
+            /* Focus effect */
         }
 
         .btn-primary {
-            background-color: #6d4c41; /* Dark brown button */
+            background-color: #6d4c41;
+            /* Dark brown button */
             border-color: #6d4c41;
             border-radius: 25px;
             padding: 12px;
@@ -62,14 +71,18 @@
         }
 
         .btn-primary:hover {
-            background-color: #8d6e63; /* Hover effect */
+            background-color: #8d6e63;
+            /* Hover effect */
             border-color: #8d6e63;
         }
 
         .alert-danger {
-            background-color: #f8d7da; /* Light red alert background */
-            color: #721c24; /* Red text */
-            border-color: #f5c6cb; /* Border color */
+            background-color: #f8d7da;
+            /* Light red alert background */
+            color: #721c24;
+            /* Red text */
+            border-color: #f5c6cb;
+            /* Border color */
             border-radius: 5px;
             padding: 10px;
             font-weight: 600;
@@ -87,6 +100,7 @@
             from {
                 opacity: 0;
             }
+
             to {
                 opacity: 1;
             }
@@ -106,28 +120,29 @@
 
             <!-- Displaying validation errors if any -->
             @if ($errors->any())
-            <div class="alert alert-danger">
-                <ul>
-                    @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
             @endif
 
             <form action="/" method="GET">
                 @csrf
                 <div class="mb-3">
                     <label for="name" class="form-label">Name:</label>
-                    <input type="text" id="name" name="name" class="form-control" value="{{ old('name') }}" required>
+                    <input type="text" id="name" name="name" class="form-control" value="{{ old('name') }}"
+                        required>
                 </div>
-                
+
                 <div class="mb-3">
                     <label for="table_id" class="form-label">Room Number:</label>
                     <select id="table_id" name="table_id" class="form-control" required>
                         <option value="" disabled selected>Select a Room</option>
-                        @foreach($tables as $table)
-                            <option value="{{ $table->id }}" >
+                        @foreach ($tables as $table)
+                            <option value="{{ $table->id }}">
                                 {{ $table->table_name }}
                             </option>
                         @endforeach
@@ -136,15 +151,17 @@
 
                 <div class="mb-3">
                     <label for="phone" class="form-label">Phone Confirmation:</label>
-                    <input type="text" id="phone" name="phone" class="form-control" value="{{ old('phone') }}" required>
+                    <input type="text" id="phone" name="phone" class="form-control" value="{{ old('phone') }}"
+                        required>
                 </div>
 
                 <button type="submit" class="btn btn-primary w-100">Submit</button>
-                <br/>
-                <br/>
-                <br/>
-                <br/>
-                <a type="submit" class="btn btn-primary w-100" href="/?table_id={{ request()->route('id') }}">Skip for later</a>
+                <br />
+                <br />
+                <br />
+                <br />
+                <a type="submit" class="btn btn-primary w-100" href="/?table_id={{ request()->route('id') }}">Skip for
+                    later</a>
             </form>
         </div>
     </div>

@@ -13,8 +13,8 @@
         body {
             background-color: #f8f5f1;
             /* Light beige background */
-            font-family: 'Courier New', Courier, monospace;
-            /* Monospaced font for thermal look */
+            font-family: Calibri, Arial, sans-serif;
+            /* Apply Calibri with fallback fonts */
             font-size: 0.9rem;
             /* Smaller font */
         }
