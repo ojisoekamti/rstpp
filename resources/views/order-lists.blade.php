@@ -85,7 +85,7 @@
         // Function to print the order bill
         function printOrderBill(order) {
             const orderDetails = `
-            Order Bill
+Order Bill
 Customer: ${order.customer_name}
 Table: ${order.table_id}
 Phone: ${order.phone}
@@ -98,15 +98,13 @@ Total: Rp ${order.total_amount.toLocaleString()}
 
             // Trigger print
             const printWindow = window.open('', '', 'width=600,height=400');
-            console.log(printWindow);
-
             printWindow.document.write('<pre>' + orderDetails + '</pre>');
             printWindow.document.close();
             printWindow.print();
         }
 
-        // Call the function to fetch and display the latest order
-        fetchLatestOrder();
+        // Call the function to fetch the latest order every 3 seconds
+        setInterval(fetchLatestOrder, 3000); // 3 seconds interval
     </script>
 
 </body>
