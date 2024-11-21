@@ -83,7 +83,7 @@
             const orderElement = document.createElement('div');
             orderElement.classList.add('order-item');
             orderElement.innerHTML = `
-                <div class="order-title">${order.customer_name} - Table: ${order.table_id}</div>
+                <div class="order-title">${order.customer_name} - Table/Room ID: ${order.table_id}</div>
                 <div>Phone: ${order.phone}</div>
                 <div>Items:</div>
                 <ul>
