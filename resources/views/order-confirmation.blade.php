@@ -202,6 +202,16 @@
                         total: itemTotal,
                         notes: notes // Include the notes in the order details
                     });
+
+                    console.log({
+                        itemId: itemId, // Assuming each item has an `itemId` or unique identifier
+                        name: item.name,
+                        quantity: item.quantity,
+                        price: item.price,
+                        total: itemTotal,
+                        notes: notes // Include the notes in the order details
+                    });
+
                 }
 
                 // Send the order details to the server using fetch
