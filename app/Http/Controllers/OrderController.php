@@ -171,7 +171,7 @@ class OrderController  extends Controller
     {
         // Fetch the latest order with its items
         $latestOrder = Order::with('items')->orderBy('created_at', 'desc')->first();
-        dd($latestOrder);
+        // dd($latestOrder);
 
         if (!$latestOrder) {
             return response()->json(['message' => 'No orders found'], 404);

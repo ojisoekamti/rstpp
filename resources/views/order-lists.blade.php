@@ -114,7 +114,7 @@ Total: Rp ${order.total_amount.toLocaleString()}
             printWindow.document.close();
             printWindow.print();
         }
-        fetchLatestOrder();
+        // fetchLatestOrder();
         // Call the function to fetch the latest order every 3 seconds
         setInterval(fetchLatestOrder, 3000); // 3 seconds interval
     </script>
