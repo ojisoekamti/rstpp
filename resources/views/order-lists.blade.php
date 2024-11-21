@@ -54,6 +54,8 @@
             fetch('/api/get-latest-order')
                 .then(response => response.json())
                 .then(data => {
+                    console.log(data);
+
                     if (data.message) {
                         console.log(data.message); // No orders found
                         return;
@@ -112,7 +114,7 @@ Total: Rp ${order.total_amount.toLocaleString()}
             printWindow.document.close();
             printWindow.print();
         }
-
+        fetchLatestOrder();
         // Call the function to fetch the latest order every 3 seconds
         setInterval(fetchLatestOrder, 3000); // 3 seconds interval
     </script>
