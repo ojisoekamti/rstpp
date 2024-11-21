@@ -187,16 +187,20 @@
                                             {!! $item->description !!}</p>
                                         <p class="menu-price mb-2">Rp {{ number_format($item->price, 0, ',', '.') }}
                                         </p>
-                                        <button
-                                            class="btn btn-sm btn-order w-100"onclick="toggleOrder(this, '{{ $item->id }}', '{{ addslashes($item->name) }}', {{ $item->price }}, {{ $item->stock }})">Tambahkan</button>
-                                        <div
-                                            class="order-controls d-none mt-2 d-flex justify-content-center align-items-center">
-                                            <button class="btn btn-secondary btn-sm"
-                                                onclick="changeOrder(this, -1, '{{ $item->id }}')">-</button>
-                                            <span class="order-quantity mx-2">0</span>
-                                            <button class="btn btn-secondary btn-sm"
-                                                onclick="changeOrder(this, 1, '{{ $item->id }}', {{ $item->stock }})">+</button>
-                                        </div>
+                                        @if ($item->stock > 0)
+                                            <button
+                                                class="btn btn-sm btn-order w-100"onclick="toggleOrder(this, '{{ $item->id }}', '{{ addslashes($item->name) }}', {{ $item->price }}, {{ $item->stock }})">Tambahkan</button>
+                                            <div
+                                                class="order-controls d-none mt-2 d-flex justify-content-center align-items-center">
+                                                <button class="btn btn-secondary btn-sm"
+                                                    onclick="changeOrder(this, -1, '{{ $item->id }}')">-</button>
+                                                <span class="order-quantity mx-2">0</span>
+                                                <button class="btn btn-secondary btn-sm"
+                                                    onclick="changeOrder(this, 1, '{{ $item->id }}', {{ $item->stock }})">+</button>
+                                            </div>
+                                        @else
+                                            <div>Out of Stock</div>
+                                        @endif
 
                                     </div>
                                 </div>
