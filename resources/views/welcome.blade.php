@@ -199,7 +199,7 @@
                                                     onclick="changeOrder(this, 1, '{{ $item->id }}', {{ $item->stock }})">+</button>
                                             </div>
                                         @else
-                                            <div>Out of Stock</div>
+                                            <div style="font-style: italic; color: red;">Out of Stock</div>
                                         @endif
 
                                     </div>
