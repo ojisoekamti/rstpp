@@ -63,6 +63,8 @@ class OrderController  extends Controller
             'totalAmount' => 'required|numeric',
         ]);
 
+        return response()->json(['success' => true, 'message' => 'Order saved successfully!', 'name' => $request->all()], 500);
+
         // Start a database transaction to ensure both order and items are stored atomically
         DB::beginTransaction();
 
