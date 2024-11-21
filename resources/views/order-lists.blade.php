@@ -47,8 +47,7 @@
     </div>
 
     <script>
-        let printWindow = null; // Variable to hold the reference to the print window
-        let lastOrderId = null; // Variable to store the last loaded order's ID
+        let lastOrderId = null; // Track the last loaded order ID
 
         // Function to fetch the latest order from the API
         function fetchLatestOrder() {
@@ -69,6 +68,8 @@
                         displayOrder(data);
                         // Auto-print the order bill
                         printOrderBill(data);
+                    } else {
+                        console.log('Order already loaded, skipping...');
                     }
                 })
                 .catch(error => console.error('Error fetching order:', error));
@@ -93,11 +94,6 @@
 
         // Function to print the order bill
         function printOrderBill(order) {
-            if (printWindow && !printWindow.closed) {
-                // If the print window is already open, do not open a new one
-                return;
-            }
-
             const orderDetails = `
 Order Bill
 Customer: ${order.customer_name}
@@ -111,7 +107,7 @@ Total: Rp ${order.total_amount.toLocaleString()}
             `;
 
             // Trigger print
-            printWindow = window.open('', '', 'width=600,height=400');
+            const printWindow = window.open('', '', 'width=600,height=400');
             printWindow.document.write('<pre>' + orderDetails + '</pre>');
             printWindow.document.close();
             printWindow.print();
