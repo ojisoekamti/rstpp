@@ -55,6 +55,8 @@
                 fetch('/api/get-latest-order')
                     .then(response => response.json())
                     .then(data => {
+                        console.log(data);
+
                         if (data.message) {
                             console.log(data.message); // If no pending orders
                             return;
