@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\DB;
 use App\OrderItem;
 use Illuminate\Support\Facades\Log;
 
-class OrderController  extends \TCG\Voyager\Http\Controllers\VoyagerBaseController
+class OrderController  extends Controller
 {
 
 
@@ -64,7 +64,7 @@ class OrderController  extends \TCG\Voyager\Http\Controllers\VoyagerBaseControll
         ]);
 
         // Start a database transaction to ensure both order and items are stored atomically
-        \DB::beginTransaction();
+        DB::beginTransaction();
 
         try {
             // Create a new order
@@ -87,12 +87,12 @@ class OrderController  extends \TCG\Voyager\Http\Controllers\VoyagerBaseControll
             }
 
             // Commit the transaction
-            \DB::commit();
+            DB::commit();
 
             return response()->json(['success' => true, 'message' => 'Order saved successfully!', 'name' => $request->name], 200);
         } catch (\Exception $e) {
             // Rollback the transaction if anything goes wrong
-            \DB::rollBack();
+            DB::rollBack();
 
             // Log the error for debugging purposes
             Log::error('Order Confirmation Error: ' . $e->getMessage());
