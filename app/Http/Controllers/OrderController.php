@@ -179,6 +179,7 @@ class OrderController  extends Controller
 
         // Format the response
         $orderData = [
+            'id' => $latestOrder->id,
             'customer_name' => $latestOrder->customer_name,
             'table_id' => $latestOrder->table_id,
             'phone' => $latestOrder->phone,
