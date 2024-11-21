@@ -98,6 +98,8 @@ Total: Rp ${order.total_amount.toLocaleString()}
 
             // Trigger print
             const printWindow = window.open('', '', 'width=600,height=400');
+            console.log(printWindow);
+
             printWindow.document.write('<pre>' + orderDetails + '</pre>');
             printWindow.document.close();
             printWindow.print();
