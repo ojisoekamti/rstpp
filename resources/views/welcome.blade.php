@@ -188,7 +188,7 @@
                                         <p class="menu-price mb-2">Rp {{ number_format($item->price, 0, ',', '.') }}
                                         </p>
                                         <button
-                                            class="btn btn-sm btn-order w-100"onclick="toggleOrder(this, '{{ $item->id }}', '{{ addslashes($item->name) }}', {{ $item->price }})">Tambahkan</button>
+                                            class="btn btn-sm btn-order w-100"onclick="toggleOrder(this, '{{ $item->id }}', '{{ addslashes($item->name) }}', {{ $item->price }}, {{ $item->stock }})">Tambahkan</button>
                                         <div
                                             class="order-controls d-none mt-2 d-flex justify-content-center align-items-center">
                                             <button class="btn btn-secondary btn-sm"
