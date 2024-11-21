@@ -14,4 +14,9 @@ class Order extends Model
 
     // Or if you want to allow more fields, you can add them here as well
     // protected $fillable = ['total_amount', 'other_field', 'another_field'];
+
+    public function items()
+    {
+        return $this->hasMany(OrderItem::class);
+    }
 }

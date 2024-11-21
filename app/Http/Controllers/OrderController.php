@@ -166,4 +166,31 @@ class OrderController  extends Controller
             Log::error("Printing failed: " . $e->getMessage());
         }
     }
+
+    public function getLatestOrder()
+    {
+        // Fetch the latest order with its items
+        $latestOrder = Order::with('items')->latest()->first();
+
+        if (!$latestOrder) {
+            return response()->json(['message' => 'No orders found'], 404);
+        }
+
+        // Format the response
+        $orderData = [
+            'customer_name' => $latestOrder->customer_name,
+            'table_id' => $latestOrder->table_id,
+            'phone' => $latestOrder->phone,
+            'items' => $latestOrder->items->map(function ($item) {
+                return [
+                    'name' => $item->productItem->name,
+                    'quantity' => $item->quantity,
+                    'price' => $item->price,
+                ];
+            }),
+            'total_amount' => $latestOrder->total_amount,
+        ];
+
+        return response()->json($orderData, 200);
+    }
 }

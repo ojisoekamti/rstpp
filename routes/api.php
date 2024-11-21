@@ -20,3 +20,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 Route::post('/order-list', [OrderController::class, 'placeOrder']);
+Route::get('/get-latest-order', [OrderController::class, 'getLatestOrder']);
