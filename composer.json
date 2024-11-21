@@ -13,6 +13,7 @@
         "laravel/sanctum": "^3.3",
         "laravel/tinker": "^2.8",
         "mike42/escpos-php": "^4.0",
+        "pusher/pusher-php-server": "^7.2",
         "tcg/voyager": "^1.7"
     },
     "require-dev": {

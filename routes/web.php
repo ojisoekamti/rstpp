@@ -49,6 +49,10 @@ Route::get('/orders/{id}', function () {
     ]);
 });
 
+Route::get('/order-lists', function () {
+    return view('order-lists'); // Replace with your blade template for the order list
+});
+
 
 Route::group(['prefix' => 'admin'], function () {
     Voyager::routes();
