@@ -195,7 +195,7 @@
                                                 onclick="changeOrder(this, -1, '{{ $item->id }}')">-</button>
                                             <span class="order-quantity mx-2">0</span>
                                             <button class="btn btn-secondary btn-sm"
-                                                onclick="changeOrder(this, 1, '{{ $item->id }}')">+</button>
+                                                onclick="changeOrder(this, 1, '{{ $item->id }}', {{ $item->stock }})">+</button>
                                         </div>
 
                                     </div>
@@ -230,11 +230,17 @@
             }
 
             // Toggle between "Tambahkan" and quantity controls
-            function toggleOrder(button, itemId, itemName, itemPrice) {
+            function toggleOrder(button, itemId, itemName, itemPrice, maxStock) {
                 const orderControls = button.nextElementSibling;
+
                 if (orderControls.classList.contains("d-none")) {
+                    // Hide the "Tambahkan" button and show the quantity controls
                     button.classList.add("d-none");
                     orderControls.classList.remove("d-none");
+
+                    // Store the stock limit and initialize the quantity
+                    orderControls.dataset.maxStock = maxStock;
+                    orderControls.dataset.quantity = 1;
 
                     // Initialize item in orderData
                     orderData[itemId] = {
@@ -242,29 +248,40 @@
                         price: itemPrice,
                         quantity: 1,
                     };
-                    console.log(orderData);
 
-                    orderControls.querySelector(".order-quantity").textContent = 1; // Start with 1
-                    updateTotalPrice(); // Update total
+                    // Update the displayed quantity and total price
+                    orderControls.querySelector(".order-quantity").textContent = 1;
+                    updateTotalPrice();
                 }
             }
 
             // Change the order quantity dynamically
             function changeOrder(button, delta, itemId) {
-                const quantitySpan = button.parentElement.querySelector(".order-quantity");
-                console.log(delta)
+                const orderControls = button.parentElement;
+                const quantitySpan = orderControls.querySelector(".order-quantity");
+
+                // Get the current quantity and stock limit
                 let currentQuantity = parseInt(quantitySpan.textContent, 10);
+                const maxStock = parseInt(orderControls.dataset.maxStock, 10);
+
+                // Update the quantity
                 currentQuantity += delta;
 
-                // Prevent negative quantity
+                // Prevent negative quantities or exceeding max stock
                 if (currentQuantity < 0) currentQuantity = 0;
+                if (currentQuantity > maxStock) {
+                    currentQuantity = maxStock;
+                    alert("Stock limit reached!");
+                }
 
+                // Update the UI
                 quantitySpan.textContent = currentQuantity;
 
-                // Update orderData
+                // Update the order data or remove the item if quantity is zero
                 if (currentQuantity === 0) {
-                    delete orderData[itemId]; // Remove item if quantity is 0
-                    const orderControls = button.parentElement;
+                    delete orderData[itemId];
+
+                    // Reset controls to "Tambahkan" state
                     const addButton = orderControls.previousElementSibling;
                     orderControls.classList.add("d-none");
                     addButton.classList.remove("d-none");
@@ -272,7 +289,8 @@
                     orderData[itemId].quantity = currentQuantity;
                 }
 
-                updateTotalPrice(); // Update total
+                // Update the total price
+                updateTotalPrice();
             }
 
             // Navigate to confirmation page with order data
