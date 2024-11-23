@@ -9,6 +9,7 @@ use App\Events\OrderPlaced;
 
 
 use App\OrderItem;
+use App\ProductItem;
 use Exception;
 use Illuminate\Support\Facades\Log;
 
@@ -94,6 +95,8 @@ class OrderController  extends Controller
                     'price' => $item['price'],
                     'notes' => $item['notes'],
                 ]);
+
+                ProductItem::where('id', $item['itemId'])->decrement('stock', $item['quantity']);
             }
 
             // Commit the transaction

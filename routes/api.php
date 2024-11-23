@@ -3,7 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\OrderController;
-
+use App\Http\Controllers\ProductItemController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,3 +21,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 Route::post('/order-list', [OrderController::class, 'placeOrder']);
 Route::get('/get-latest-order', [OrderController::class, 'getLatestOrder']);
+Route::patch('/product-items/{id}/update-stock', [ProductItemController::class, 'updateStock']);

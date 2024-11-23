@@ -2,64 +2,27 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\ProductItem;
+use App\ProductItem;
 use Illuminate\Http\Request;
 
 class ProductItemController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function updateStock(Request $request, $id)
     {
-        //
-    }
+        $request->validate([
+            'quantity' => 'required|integer',
+        ]);
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
+        try {
+            $product = ProductItem::findOrFail($id);
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+            // Update stock
+            $product->stock += $request->quantity; // Increment or decrement based on quantity
+            $product->save();
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(ProductItem $productItem)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(ProductItem $productItem)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, ProductItem $productItem)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(ProductItem $productItem)
-    {
-        //
+            return response()->json(['success' => true, 'message' => 'Stock updated successfully!', 'stock' => $product->stock]);
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'message' => 'Failed to update stock.', 'error' => $e->getMessage()], 500);
+        }
     }
 }

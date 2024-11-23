@@ -4,10 +4,8 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PrintController;
+use App\Http\Controllers\ProductItemController;
 use App\Http\Controllers\ReceiptController;
-
-
-
 
 /*
 |--------------------------------------------------------------------------
