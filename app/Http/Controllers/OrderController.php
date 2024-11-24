@@ -12,7 +12,7 @@ use App\OrderItem;
 use App\ProductItem;
 use Exception;
 use Illuminate\Support\Facades\Log;
-
+use Illuminate\Support\Facades\Session;
 use Mike42\Escpos\Printer;
 use Mike42\Escpos\PrintConnectors\WindowsPrintConnector;
 use Mike42\Escpos\PrintConnectors\NetworkPrintConnector;
@@ -78,13 +78,20 @@ class OrderController  extends Controller
         DB::beginTransaction();
 
         try {
-            // Create a new order
-            $order = Order::create([
-                'total_amount' => $request->totalAmount,
-                'customer_name' => $request->name,
-                'table_id' => $request->tableId,
-                'phone' => $request->phone,
-            ]);
+
+            if (!Session::has('order_id')) {
+
+                // Create a new order
+                $order = Order::create([
+                    'total_amount' => $request->totalAmount,
+                    'customer_name' => $request->name,
+                    'table_id' => $request->tableId,
+                    'phone' => $request->phone,
+                ]);
+            } else {
+                $order = Order::find(Session::get('order_id'));
+            }
+
 
             // Loop through order items and save them to the database
             foreach ($request->orderDetails as $item) {
@@ -101,6 +108,7 @@ class OrderController  extends Controller
 
             // Commit the transaction
             DB::commit();
+            Session::put('order_id', $order->id);
 
             broadcast(new OrderPlaced($order));
             return response()->json(['success' => true, 'message' => 'Order saved successfully!', 'name' => $request->name], 200);
@@ -197,5 +205,62 @@ class OrderController  extends Controller
         ];
 
         return response()->json($orderData, 200);
+    }
+
+    public function confirmationTable(Request $request)
+    {
+        $table_id = $request->table_id;
+        $name = $request->name;
+        $phone = $request->phone;
+        Session::put('table_id', $table_id);
+        Session::put('name', $name);
+        Session::put('phone', $phone);
+        return redirect("/");
+    }
+
+    public function orderDetails(Request $request)
+    {
+        // dd(Session::get('order_id', null));
+        $order_id = Session::get('order_id', null);
+        $table_id = Session::get('table_id', null);
+        $phone = Session::get('phone', null);
+        $name = Session::get('name', null);
+        return view('order-details', compact(
+            'order_id',
+            'table_id',
+            'phone',
+            'name',
+        ));
+    }
+
+    public function getOrders(Request $request, $id)
+    {
+        try {
+            // Fetch orders with their related items and pending status
+            $orders = Order::where('id', $id) // Filter by status
+                ->with([
+                    'items.productItem' => function ($query) {
+                        $query->select('id', 'name'); // Fetch only necessary columns
+                    },
+                    'table' => function ($query) {
+                        $query->select('id', 'table_name', 'type'); // Fetch table info like name and room
+                    }
+                ])
+
+                ->first();
+
+            // Format response
+            return response()->json([
+                'success' => true,
+                'orders' => $orders
+            ]);
+        } catch (\Exception $e) {
+            // Handle errors
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to fetch orders',
+                'error' => $e->getMessage(),
+            ], 500);
+        }
     }
 }

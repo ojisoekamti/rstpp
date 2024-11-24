@@ -129,7 +129,7 @@
                 </div>
             @endif
 
-            <form action="/" method="GET">
+            <form action="/confirmationTable" method="POST">
                 @csrf
                 <div class="mb-3">
                     <label for="name" class="form-label">Name:</label>
@@ -158,10 +158,7 @@
                 <button type="submit" class="btn btn-primary w-100">Submit</button>
                 <br />
                 <br />
-                <br />
-                <br />
-                <a type="submit" class="btn btn-primary w-100" href="/?table_id={{ request()->route('id') }}">Skip for
-                    later</a>
+                {{-- <a type="submit" class="btn btn-primary w-100" href="/?table_id={{ request()->route('id') }}">Skip for later</a> --}}
             </form>
         </div>
     </div>

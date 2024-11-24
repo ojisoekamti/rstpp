@@ -141,6 +141,12 @@
     </style>
 
 </head>
+@php
+    $table_id = session('table_id', null); // Retrieve the order ID or return null if not set
+    $name = session('name', null); // Retrieve the order ID or return null if not set
+    $phone = session('phone', null); // Retrieve the order ID or return null if not set
+    $order_id = session('order_id', null); // Retrieve the order ID or return null if not set
+@endphp
 
 <body>
     <div class="container ">
@@ -216,7 +222,12 @@
             <div class="total-price">
                 Total: <span id="total-price">Rp 0</span>
             </div>
-            <button class="btn btn-light" onclick="goToConfirmation()">Confirm Order</button>
+            <div>
+                @if ($order_id !== null)
+                    <a href="/order-lists" class="btn btn-light">Order List</a>
+                @endif
+                <button class="btn btn-light" onclick="goToConfirmation()">Confirm Order</button>
+            </div>
         </footer>
 
         <!-- Bootstrap JS -->
@@ -303,9 +314,9 @@
                 const urlParams = new URLSearchParams(window.location.search);
 
                 // Retrieve each parameter
-                const name = urlParams.get('name'); // "Abdul Ghoji Hanggoro"
-                const tableId = urlParams.get('table_id'); // "1"
-                const phone = urlParams.get('phone'); // "08111211457"
+                const tableId = '{{ $table_id }}'
+                const name = '{{ $name }}'
+                const phone = '{{ $phone }}'
 
                 // Option 1: Pass via query string
                 // location.href = `/confirmation?data=${encodeURIComponent(orderDataString)}`;

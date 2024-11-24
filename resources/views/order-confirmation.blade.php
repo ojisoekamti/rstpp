@@ -236,7 +236,8 @@
                         if (data.success) {
                             alert('Order confirmed and saved!');
                             localStorage.removeItem("orderData"); // Clear order data after confirmation
-                            window.location.href = "/"; // Redirect to success page
+                            const currentParams = window.location.search;
+                            window.location.href = "/order-details"; // Redirect to success page
                         } else {
                             alert('Error saving order. Please try again.');
                         }
