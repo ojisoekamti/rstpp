@@ -10,7 +10,7 @@ class Order extends Model
     use HasFactory;
 
     // Add 'total_amount' to the $fillable array
-    protected $fillable = ['total_amount', 'customer_name', 'table_id', 'phone'];
+    protected $fillable = ['total_amount', 'customer_name', 'table_id', 'phone', 'status'];
 
     // Or if you want to allow more fields, you can add them here as well
     // protected $fillable = ['total_amount', 'other_field', 'another_field'];

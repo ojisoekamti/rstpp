@@ -143,7 +143,7 @@ class OrderController  extends Controller
         $order = Order::create($validated);
 
         // Dispatch an event to notify the frontend
-        broadcast(new OrderPlaced($order));
+        event(new OrderPlaced($order));
 
         // Print the order (thermal)
         $this->printOrder($order);
@@ -259,6 +259,71 @@ class OrderController  extends Controller
             return response()->json([
                 'success' => false,
                 'message' => 'Failed to fetch orders',
+                'error' => $e->getMessage(),
+            ], 500);
+        }
+    }
+
+    public function getNewOrders(Request $request)
+    {
+        $lastOrderId = $request->get('last_order_id', 0);
+
+        $orders = Order::where('id', '>', $lastOrderId)
+            ->with([
+                'items.productItem' => function ($query) {
+                    $query->select('id', 'name'); // Fetch only necessary columns
+                },
+                'table' => function ($query) {
+                    $query->select('id', 'table_name', 'type'); // Fetch table info like name and room
+                }
+            ])->where(function ($q) {
+                $q->orwhere("status", "pending")
+                    ->orwhere("status", "preparing")
+                    ->orwhere("status", "served");
+            })
+            ->get();
+
+        return response()->json(['orders' => $orders]);
+    }
+
+    public function processOrder(Request $request, $id)
+    {
+
+        DB::beginTransaction();
+
+        try {
+            $request->validate([
+                'status' => 'required|string|in:pending,preparing,served' // Adjust valid statuses as needed
+            ]);
+
+            $orderItem = OrderItem::find($id);
+            $orderItem->status = $request->status;
+            $orderItem->save();
+
+            // Check if all order items of the parent order have the same status
+            $orderId = $orderItem->order_id; // Assuming OrderItem has a foreign key `order_id`
+            $allItemsHaveSameStatus = OrderItem::where('order_id', $orderId)
+                ->where('status', '!=', $request->status)
+                ->doesntExist();
+
+            // If all order items have the same status, update the parent order's status
+            if ($allItemsHaveSameStatus) {
+                $order = Order::findOrFail($orderId); // Assuming there's an Order model
+                $order->status = $request->status;
+                $order->save();
+            }
+
+            DB::commit();
+
+            return response()->json(['success' => true, 'message' => 'Order saved successfully!', 'name' => $request->name], 200);
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            Log::error('Order Confirmation Error: ' . $e->getMessage());
+
+            return response()->json([
+                'success' => false,
+                'message' => 'An error occurred while saving the order.',
                 'error' => $e->getMessage(),
             ], 500);
         }

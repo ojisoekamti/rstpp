@@ -22,4 +22,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::post('/order-list', [OrderController::class, 'placeOrder']);
 Route::get('/get-orders/{id}', [OrderController::class, 'getOrders']);
 Route::get('/get-latest-order', [OrderController::class, 'getLatestOrder']);
+Route::post('/update-order-status/{id}', [OrderController::class, 'processOrder']);
 Route::patch('/product-items/{id}/update-stock', [ProductItemController::class, 'updateStock']);

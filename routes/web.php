@@ -24,6 +24,11 @@ Route::get('/', function (Request $request) {
     return view('welcome', ['menu_items' => $menu_item, 'menu_item' => $menu_item, 'categories' => $categories]);
 })->middleware('check.order.session');
 
+Route::get('/order-lists', function () {
+    return view('order-lists');
+});
+Route::get('/api/orders/new', [OrderController::class, 'getNewOrders']);
+
 Route::get('/order-details', [OrderController::class, 'orderDetails'])->middleware('check.order.session');
 Route::get('/print-order/{orderId}', [OrderController::class, 'printOrder']);
 Route::post('/confirmationTable', [OrderController::class, 'confirmationTable']);
