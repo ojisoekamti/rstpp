@@ -315,7 +315,7 @@ class OrderController  extends Controller
 
             DB::commit();
 
-            return response()->json(['success' => true, 'message' => 'Order saved successfully!', 'name' => $request->name], 200);
+            return response()->json(['success' => true, 'message' => 'Order saved successfully!', 'name' => $request->name, 'isexists' => $allItemsHaveSameStatus], 200);
         } catch (\Exception $e) {
             DB::rollBack();
 
