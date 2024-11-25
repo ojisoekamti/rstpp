@@ -79,10 +79,15 @@
             const orderNotifications = document.getElementById('order-notifications');
             const newOrder = document.createElement('div');
             newOrder.className = 'col-12 col-md-3 mb-4';
-
+            let cardClass = 'card-pending';
+            if (order.item.status == 'served') {
+                cardClass = 'card-preparing';
+            } else if (order.item.status == 'preparing') {
+                cardClass = 'card-served';
+            }
             // Insert relevant information into the new card
             newOrder.innerHTML = `
-                <div class="card card-button border-primary p-3 card-pending" onclick="handleCardClick(this, ${item.id})">
+                <div class="card card-button border-primary p-3 ${cardClass}" onclick="handleCardClick(this, ${item.id})">
                     <div class="card-body text-center">
                         <h5 class="card-title">Order ID: ${order.id}</h5>
                         <p class="card-text"><strong>Room ID:</strong> ${order.table.table_name}</p>
@@ -105,7 +110,9 @@
         }
 
         function autoPrintOrder(order, item) {
-            const printContent = `
+            try {
+
+                const printContent = `
                 Order ID: 
                 Room: 
                 Customer: 
@@ -115,17 +122,20 @@
                 Notes: 
             `;
 
-            qz.websocket.connect().then(() => {
-                return qz.printers.find(); // Automatically find the default printer
-            }).then(printer => {
-                const config = qz.configs.create(printer); // Create a printer config
-                const data = [{
-                    type: 'raw',
-                    format: 'plain',
-                    data: printContent
-                }];
-                return qz.print(config, data);
-            }).catch(err => console.error('Error printing order:', err));
+                qz.websocket.connect().then(() => {
+                    return qz.printers.find(); // Automatically find the default printer
+                }).then(printer => {
+                    const config = qz.configs.create(printer); // Create a printer config
+                    const data = [{
+                        type: 'raw',
+                        format: 'plain',
+                        data: printContent
+                    }];
+                    return qz.print(config, data);
+                }).catch(err => console.error('Error printing order:', err));
+            } catch (error) {
+                console.error(error);
+            }
         }
 
         function handleCardClick(cardElement, orderId) {
