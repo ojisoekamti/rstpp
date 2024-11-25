@@ -80,9 +80,9 @@
             const newOrder = document.createElement('div');
             newOrder.className = 'col-12 col-md-3 mb-4';
             let cardClass = 'card-pending';
-            if (order.item.status == 'served') {
+            if (item.status == 'served') {
                 cardClass = 'card-preparing';
-            } else if (order.item.status == 'preparing') {
+            } else if (item.status == 'preparing') {
                 cardClass = 'card-served';
             }
             // Insert relevant information into the new card
